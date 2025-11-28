@@ -478,14 +478,4 @@ Si tienes problemas:
    - Sistema operativo
    - Versión de Docker
 
----
-
-## 📞 Contacto
-
-**Autor**: Tu Nombre  
-**Email**: tu-email@ejemplo.com  
-**GitHub**: [@tu-usuario](https://github.com/tu-usuario)
-
----
-
 ⭐ Si este proyecto te fue útil, dale una estrella en GitHub!
