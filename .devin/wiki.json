@@ -1,0 +1,299 @@
+{
+  "repo_notes": [
+    {
+      "content": ""
+    }
+  ],
+  "pages": [
+    {
+      "title": "Visión General",
+      "purpose": "Introducir el sistema UpTimer Arriendos, explicando su propósito como una plataforma de monitoreo de API en tiempo real y seguimiento de QoS, y proporcionando una visión general arquitectónica de alto nivel",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Arquitectura",
+      "purpose": "Profundizar en la arquitectura del sistema, incluyendo interacciones de componentes, patrones de flujo de datos y decisiones de diseño",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Componentes del Sistema",
+      "purpose": "Describir los cuatro componentes principales (Productor, Kafka, Procesador Spark, Dashboard) y cómo interactúan dentro de la red Docker",
+      "parent": "Arquitectura",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Pipeline de Flujo de Datos",
+      "purpose": "Explicar el recorrido completo de los datos desde el monitoreo de la API a través del streaming de Kafka hasta el almacenamiento en el data lake y la visualización",
+      "parent": "Arquitectura",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Estructura del Data Lake",
+      "purpose": "Documentar la organización del data lake, incluyendo eventos crudos (lake1_raw), métricas agregadas (lake2_metrics) y gestión de puntos de control (checkpoints)",
+      "parent": "Arquitectura",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Servicio Productor",
+      "purpose": "Documentación detallada del componente productor que monitorea APIs externas y publica eventos en Kafka",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Implementación del Productor",
+      "purpose": "Explicar la funcionalidad del script producer.py, incluyendo la lógica de sondeo (polling) de la API, manejo de errores y publicación de mensajes en Kafka",
+      "parent": "Servicio Productor",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Contenerización del Productor",
+      "purpose": "Documentar el Dockerfile para el servicio productor y su configuración de construcción",
+      "parent": "Servicio Productor",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Servicio de Procesador Spark",
+      "purpose": "Documentación completa del procesador de streaming Spark que consume eventos de Kafka y realiza agregaciones en tiempo real",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Lógica de Procesamiento de Streams",
+      "purpose": "Explicar la implementación de spark_processor.py, incluyendo el análisis de JSON, agregaciones por ventana y patrones de doble escritura",
+      "parent": "Servicio de Procesador Spark",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Contenerización de Spark",
+      "purpose": "Documentar el Dockerfile para el procesador Spark, incluyendo la configuración de Spark y la configuración del directorio del data lake",
+      "parent": "Servicio de Procesador Spark",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Tolerancia a Fallos y Checkpointing",
+      "purpose": "Explicar el mecanismo de checkpointing de Spark, el manejo de marcas de agua (watermarks) y las estrategias de recuperación",
+      "parent": "Servicio de Procesador Spark",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Servicio de Dashboard",
+      "purpose": "Documentación del dashboard en tiempo real que visualiza las métricas de QoS y el estado de salud del sistema",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Implementación del Dashboard",
+      "purpose": "Explicar la funcionalidad de dashboard_reader.py, incluyendo la lectura de archivos Parquet, cálculo de métricas y lógica de alertas",
+      "parent": "Servicio de Dashboard",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Estados de Alerta y Umbrales",
+      "purpose": "Documentar el sistema de alertas de tres niveles (Operativo, Lento, Caído) y los umbrales que activan cada estado",
+      "parent": "Servicio de Dashboard",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Contenerización del Dashboard",
+      "purpose": "Documentar el Dockerfile para el servicio de dashboard",
+      "parent": "Servicio de Dashboard",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Configuración de Kafka",
+      "purpose": "Documentar la configuración del broker de Kafka, incluyendo la configuración en modo KRaft, gestión de tópicos y comprobaciones de salud",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Despliegue y Operaciones",
+      "purpose": "Guía para desplegar y operar el sistema UpTimer Arriendos en entornos de producción o desarrollo",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Orquestación con Docker Compose",
+      "purpose": "Explicación detallada de la configuración del archivo docker-compose.yml, dependencias de servicios y redes",
+      "parent": "Despliegue y Operaciones",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Iniciando el Sistema",
+      "purpose": "Instrucciones paso a paso para iniciar todos los servicios, incluyendo el orden de inicio y la resolución de dependencias",
+      "parent": "Despliegue y Operaciones",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Configuración y Variables de Entorno",
+      "purpose": "Documentar todos los parámetros configurables incluyendo API_URL, KAFKA_BOOTSTRAP_SERVERS y parámetros de tiempo",
+      "parent": "Despliegue y Operaciones",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Monitoreo y Solución de Problemas",
+      "purpose": "Problemas operativos comunes, comandos de inspección de logs y procedimientos de solución de problemas",
+      "parent": "Despliegue y Operaciones",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Dependencias y Stack Tecnológico",
+      "purpose": "Visión general completa de todas las dependencias de Python y sus roles en el sistema",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Dependencias de Python",
+      "purpose": "Explicación detallada de requirements.txt incluyendo kafka-python, pyspark, pandas, pyarrow y fastparquet",
+      "parent": "Dependencias y Stack Tecnológico",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Tecnologías de Infraestructura",
+      "purpose": "Documentar los componentes de infraestructura incluyendo Apache Kafka 3.8, Apache Spark 3.5.1 y Docker",
+      "parent": "Dependencias y Stack Tecnológico",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Guía de Desarrollo",
+      "purpose": "Guía para desarrolladores que deseen modificar o extender el sistema UpTimer Arriendos",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Configuración del Entorno de Desarrollo",
+      "purpose": "Instrucciones para configurar un entorno de desarrollo local, incluyendo dependencias de Python y configuración de Docker",
+      "parent": "Guía de Desarrollo",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Estructura del Repositorio y Configuración de Git",
+      "purpose": "Explicar la organización del repositorio, patrones de .gitignore (especialmente la exclusión del datalake) y configuraciones de .gitattributes",
+      "parent": "Guía de Desarrollo",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Construcción y Pruebas Locales",
+      "purpose": "Instrucciones para construir contenedores localmente, probar componentes individuales y depurar problemas comunes",
+      "parent": "Guía de Desarrollo",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Formatos de Datos y Esquemas",
+      "purpose": "Documentar los esquemas de datos utilizados en todo el sistema, desde mensajes de Kafka hasta archivos Parquet",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    }
+  ]
+}
