@@ -4,3 +4,6 @@ pandas
 pyspark
 fastparquet
 pyarrow
+matplotlib
+streamlit
+pytz

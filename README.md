@@ -52,9 +52,28 @@ docker compose up -d
 
 ---
 
-## 📊 Ver el Dashboard en Tiempo Real
+## 📊 Acceso a los Dashboards
 
-Para ver las métricas en vivo:
+Este proyecto incluye **dos dashboards** para visualización de métricas:
+
+### 🖥️ Dashboard Web Interactivo (Streamlit)
+
+Accede al dashboard web en tu navegador:
+
+```
+http://localhost:8501
+```
+
+**Características del Dashboard Streamlit:**
+- 📈 **KPIs en tiempo real**: Disponibilidad, latencia promedio, throughput
+- 📊 **Gráficos interactivos**: Time series, histogramas, métricas por ventana
+- 🔄 **Actualización automática**: Datos actualizados cada 30 segundos
+- 📱 **Responsive**: Compatible con dispositivos móviles
+- 🎯 **Filtros avanzados**: Por rango de tiempo y estado de servicio
+
+### 📟 Dashboard en Terminal
+
+Para ver métricas básicas en la consola:
 
 ```powershell
 docker-compose logs -f dashboard
@@ -107,7 +126,8 @@ Errores:  0 en el último minuto
 | **Producer**        | Monitorea tu API cada 1 segundo y envía eventos a Kafka        | Python 3.11 + `requests` + `kafka-python` |
 | **Spark Processor** | Procesa streams en tiempo real y agrega métricas cada 1 minuto | Apache Spark 3.5.1 (Structured Streaming) |
 | **Datalake**        | Almacena datos crudos y métricas en formato Parquet            | Filesystem compartido                     |
-| **Dashboard**       | Visualiza el estado de salud en tiempo real                    | Python 3.11 + `pandas`                    |
+| **Dashboard Terminal** | Visualiza el estado de salud en la consola                   | Python 3.11 + `pandas`                    |
+| **Dashboard Web**   | Interface web interactiva con visualizaciones avanzadas        | Streamlit + `plotly` + `pandas`           |
 
 ### 📂 Estructura del Datalake
 
@@ -139,8 +159,18 @@ docker-compose logs -f
 ```powershell
 docker-compose logs -f producer        # Monitor
 docker-compose logs -f spark-processor # Procesador
-docker-compose logs -f dashboard       # Dashboard
+docker-compose logs -f dashboard       # Dashboard Terminal
 docker-compose logs -f kafka          # Kafka
+```
+
+### Acceder al Dashboard Web
+
+```powershell
+# El dashboard web estará disponible en:
+# http://localhost:8501
+
+# Verificar que el servicio esté funcionando
+docker-compose logs -f dashboard-web
 ```
 
 ### Ver estado de los contenedores
@@ -153,7 +183,8 @@ docker-compose ps
 
 ```powershell
 docker-compose restart producer
-docker-compose restart dashboard
+docker-compose restart dashboard       # Dashboard Terminal
+docker-compose restart dashboard-web   # Dashboard Web
 ```
 
 ### Detener todos los servicios
@@ -293,7 +324,11 @@ docker-compose logs kafka | Select-String "started"
 
 ### ❌ No aparecen datos en el dashboard
 
-**Pasos de diagnóstico**:
+**Para Dashboard Web (Streamlit):**
+1. Verifica que esté accesible en http://localhost:8501
+2. Si no carga, revisa logs: `docker-compose logs dashboard-web`
+
+**Para Dashboard Terminal:**
 
 1. **Verificar que el producer esté enviando datos:**
 
@@ -384,12 +419,13 @@ c8f1b94d7465   uptimer-dashboard  0.5%      45MiB / 4GiB
 UpTimerArriendos/
 ├── producer.py              # Monitor que hace ping a la API
 ├── spark_processor.py       # Procesamiento de streams con Spark
-├── dashboard_reader.py      # Dashboard de visualización
+├── dashboard_reader.py      # Dashboard de visualización en terminal
+├── dashboard_streamlit.py   # Dashboard web interactivo con Streamlit
 ├── requirements.txt         # Dependencias Python
 ├── docker-compose.yml       # Orquestación de servicios
 ├── Dockerfile.producer      # Imagen del producer
 ├── Dockerfile.spark         # Imagen de Spark
-├── Dockerfile.dashboard     # Imagen del dashboard
+├── Dockerfile.dashboard     # Imagen del dashboard terminal
 ├── datalake/               # Datos generados (no commitear)
 │   ├── lake1_raw/
 │   ├── lake2_metrics/
@@ -411,7 +447,8 @@ Ejemplos:
 ```powershell
 docker-compose up -d --build producer
 docker-compose up -d --build spark-processor
-docker-compose up -d --build dashboard
+docker-compose up -d --build dashboard        # Dashboard terminal
+docker-compose up -d --build dashboard-web    # Dashboard web
 ```
 
 ### Ejecutar comandos dentro de un contenedor
@@ -437,6 +474,8 @@ docker exec -it uptimer-dashboard ls -lh /app/datalake/lake2_metrics/
 - **Formato**: Parquet con compresión Snappy
 - **Persistencia**: Los datos sobreviven reinicios gracias al volumen compartido
 - **Dashboard**: Se actualiza cada 5 segundos leyendo los últimos 20 archivos parquet
+- **Dashboard Streamlit**: Interface web con gráficos interactivos y filtros avanzados
+- **Puerto 8501**: Dashboard web accesible via navegador
 
 ---
 
@@ -447,6 +486,8 @@ docker exec -it uptimer-dashboard ls -lh /app/datalake/lake2_metrics/
 - **[Python 3.11](https://www.python.org/)** - Lenguaje principal
 - **[Docker Compose](https://docs.docker.com/compose/)** - Orquestación de contenedores
 - **[Pandas](https://pandas.pydata.org/)** - Análisis de datos
+- **[Streamlit](https://streamlit.io/)** - Dashboard web interactivo
+- **[Plotly](https://plotly.com/python/)** - Visualizaciones interactivas
 - **[Parquet](https://parquet.apache.org/)** - Formato columnar eficiente
 
 ---

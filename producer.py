@@ -4,10 +4,14 @@ import requests
 import os
 from kafka import KafkaProducer
 from datetime import datetime
+import pytz
 
 # 1. Configuración de Kafka desde variables de entorno
 KAFKA_BOOTSTRAP_SERVERS = os.getenv('KAFKA_BOOTSTRAP_SERVERS', 'localhost:9092')
 API_URL = os.getenv('API_URL', 'http://100.111.193.44:8001/health/')
+
+# Configuración de zona horaria de Chile
+CHILE_TZ = pytz.timezone('America/Santiago')
 
 producer = KafkaProducer(
     bootstrap_servers=[KAFKA_BOOTSTRAP_SERVERS],
@@ -31,7 +35,7 @@ while True:
         
         # Armamos el mensaje para Kafka
         data = {
-            "timestamp": datetime.now().isoformat(),
+            "timestamp": datetime.now(CHILE_TZ).isoformat(),
             "url": API_URL,
             "status_code": response.status_code, # Será 200 o 503 según tu lógica
             "latency_ms": latency_ms,
@@ -44,7 +48,7 @@ while True:
 
     except requests.exceptions.ConnectionError:
         data = {
-            "timestamp": datetime.now().isoformat(),
+            "timestamp": datetime.now(CHILE_TZ).isoformat(),
             "url": API_URL,
             "status_code": 0, # Indica que no hubo respuesta
             "latency_ms": 0,
