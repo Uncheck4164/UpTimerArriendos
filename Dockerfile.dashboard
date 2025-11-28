@@ -1,0 +1,13 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copiar requirements e instalar dependencias
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar el código del dashboard
+COPY dashboard_reader.py .
+
+# Comando por defecto
+CMD ["python", "-u", "dashboard_reader.py"]

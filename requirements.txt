@@ -1,0 +1,6 @@
+requests
+kafka-python
+pandas
+pyspark
+fastparquet
+pyarrow

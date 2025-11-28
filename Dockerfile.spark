@@ -1,0 +1,23 @@
+FROM apache/spark:3.5.1-python3
+
+USER root
+
+WORKDIR /app
+
+# Copiar requirements e instalar dependencias Python
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copiar el código del procesador Spark
+COPY spark_processor.py .
+
+# Crear directorios para el datalake
+RUN mkdir -p /app/datalake/lake1_raw /app/datalake/lake2_metrics \
+    /app/datalake/checkpoints/raw /app/datalake/checkpoints/metrics && \
+    chmod -R 777 /app/datalake
+
+# Comando por defecto
+CMD ["/opt/spark/bin/spark-submit", \
+     "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1", \
+     "--master", "local[*]", \
+     "spark_processor.py"]
